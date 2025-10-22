@@ -1,12 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ChevronDown } from "lucide-react"
 import GigCarousel from "@/components/gig-carousel"
 import DualSection from "@/components/dual-section"
 import HowItWorks from "@/components/how-it-works"
 import Testimonials from "@/components/testimonials"
 import Footer from "@/components/footer"
+import { ConnectWalletButton } from "@/components/connect-wallet-button"
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0)
@@ -18,59 +18,114 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-celo-dark via-background to-celo-dark/50 px-4">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-celo-green/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-celo-green/5 rounded-full blur-3xl animate-pulse delay-1000" />
+    <main className="min-h-screen bg-white">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="text-2xl font-bold text-black">GigJar</div>
+          <ConnectWalletButton />
         </div>
+      </header>
 
-        <div className="relative z-10 text-center max-w-4xl mx-auto">
-          <div className="mb-6 inline-block">
-            <span className="px-4 py-2 rounded-full bg-celo-green/10 border border-celo-green/30 text-celo-green text-sm font-medium">
-              ✨ Powered by Celo Network
-            </span>
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white px-4 py-20 pt-32">
+        <div className="relative z-10 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left: Content */}
+          <div className="text-left">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-black mb-6 leading-tight text-balance">
+              The Freelancer Marketplace That Runs on <span className="text-[#36B37E]">Stablecoins</span>
+            </h1>
+
+            <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed max-w-xl">
+              Instant Payment Settlement, Using Stablecoins with Ultra-Low Fees and Complete Security.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              <button className="px-8 py-4 bg-[#36B37E] text-white rounded-lg font-semibold hover:bg-[#2d9a6a] transition-all shadow-lg hover:shadow-xl">
+                Post a Gig
+              </button>
+              <button className="px-8 py-4 bg-[#36B37E] text-white rounded-lg font-semibold hover:bg-[#2d9a6a] transition-all shadow-lg hover:shadow-xl">
+                Browse Gigs
+              </button>
+            </div>
+
+            {/* Platform Advantages */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 border border-gray-200">
+                <div className="w-10 h-10 rounded-full bg-[#36B37E]/10 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-[#36B37E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-black text-sm mb-1">Instant Payments</h3>
+                  <p className="text-xs text-gray-600">Get paid in stablecoins instantly</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 border border-gray-200">
+                <div className="w-10 h-10 rounded-full bg-[#36B37E]/10 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-[#36B37E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-black text-sm mb-1">Ultra-Low Fees</h3>
+                  <p className="text-xs text-gray-600">Save more with minimal transaction costs</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 border border-gray-200">
+                <div className="w-10 h-10 rounded-full bg-[#36B37E]/10 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-[#36B37E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-black text-sm mb-1">Secure Escrow</h3>
+                  <p className="text-xs text-gray-600">Protected with multi-signature security</p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight">
-            Hire Talent.
-            <br />
-            <span className="bg-gradient-to-r from-celo-green to-celo-green/70 bg-clip-text text-transparent">
-              Pay in Stablecoins.
-            </span>
-          </h1>
+          {/* Right: Co-working Space Illustration */}
+          <div className="relative">
+            <img
+              src="/vector-illustration-of-diverse-people-working-toge.jpg"
+              alt="Co-working space"
+              className="w-full h-auto rounded-2xl"
+            />
 
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            Connect with verified freelancers worldwide. All payments in stablecoins. All identities verified with Self
-            Protocol.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <button className="px-8 py-4 bg-celo-green text-white rounded-full font-semibold hover:bg-celo-green/90 transition-all transform hover:scale-105 shadow-lg">
-              Post a Gig
-            </button>
-            <button className="px-8 py-4 border-2 border-celo-green text-celo-green rounded-full font-semibold hover:bg-celo-green/10 transition-all">
-              List Your Skills
-            </button>
-          </div>
-
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <ChevronDown className="w-6 h-6 text-celo-green" />
+            <div className="mt-8 text-center">
+              <div className="flex items-center justify-center gap-8 mb-3">
+                <img src="https://www.digipaga.com/cl1.png" alt="Celo" className="h-10 object-contain" />
+                <img src="https://www.digipaga.com/mento.png" alt="Mento" className="h-10 object-contain" />
+                <img src="https://www.digipaga.com/cl4.png" alt="Self Protocol" className="h-10 object-contain" />
+              </div>
+              <p className="text-sm text-gray-600">
+                Powered by Celo, Mento & Self — for fast, cheap, secure transactions
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Gig Carousel Section */}
-      <section className="py-20 px-4 bg-background">
+      <section className="py-20 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Browse Available Gigs</h2>
-            <p className="text-lg text-muted-foreground">
-              Explore thousands of opportunities from verified freelancers
-            </p>
+            <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">Browse Verified Gigs</h2>
+            <p className="text-lg text-gray-700">Explore fixed-price tasks from verified freelancers</p>
           </div>
           <GigCarousel />
         </div>

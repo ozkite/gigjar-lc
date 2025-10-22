@@ -43,23 +43,6 @@ export default function DualSection() {
               Post Your First Gig
               <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
             </button>
-
-            {/* Badge */}
-            <div className="mt-6 pt-6 border-t border-border">
-              <p className="text-sm text-muted-foreground mb-3">Trusted by:</p>
-              <div className="flex gap-3">
-                <img
-                  src="https://www.digipaga.com/cl1.png"
-                  alt="Partner"
-                  className="h-8 opacity-70 hover:opacity-100 transition-opacity"
-                />
-                <img
-                  src="https://www.digipaga.com/cl4.png"
-                  alt="Partner"
-                  className="h-8 opacity-70 hover:opacity-100 transition-opacity"
-                />
-              </div>
-            </div>
           </div>
 
           {/* For Freelancers/Talent */}
@@ -98,18 +81,6 @@ export default function DualSection() {
               Start Earning Today
               <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
             </button>
-
-            {/* Badge */}
-            <div className="mt-6 pt-6 border-t border-border">
-              <p className="text-sm text-muted-foreground mb-3">Powered by:</p>
-              <div className="flex gap-3">
-                <img
-                  src="https://www.digipaga.com/mento.png"
-                  alt="Mento"
-                  className="h-8 opacity-70 hover:opacity-100 transition-opacity"
-                />
-              </div>
-            </div>
           </div>
         </div>
       </div>

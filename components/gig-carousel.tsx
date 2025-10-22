@@ -1,53 +1,47 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ChevronLeft, ChevronRight, CheckCircle2, DollarSign } from "lucide-react"
 
 const gigs = [
   {
     id: 1,
-    title: "Smart Contract Audit",
-    freelancer: "Alex Chen",
-    rate: "150 cUSD/hr",
+    title: "Deploy a miniapp on Farcaster",
+    price: "500 cUSD",
     verified: true,
     image: "/smart-contract-code.png",
-    skills: ["Solidity", "Security"],
+    skills: ["Farcaster", "Web3", "React"],
   },
   {
     id: 2,
-    title: "UI/UX Design",
-    freelancer: "Maria Garcia",
-    rate: "80 cUSD/hr",
+    title: "Help a project with UI/UX design",
+    price: "800 cUSD",
     verified: true,
     image: "/design-mockup.jpg",
-    skills: ["Figma", "Design"],
+    skills: ["Figma", "UI/UX", "Design"],
   },
   {
     id: 3,
-    title: "Web Development",
-    freelancer: "James Wilson",
-    rate: "120 cUSD/hr",
+    title: "Deploy Smart Contracts on Base",
+    price: "800 cUSD",
     verified: true,
     image: "/web-development-concept.png",
-    skills: ["React", "Next.js"],
+    skills: ["Solidity", "Base", "Smart Contracts"],
   },
   {
     id: 4,
-    title: "Mobile App Dev",
-    freelancer: "Sofia Rodriguez",
-    rate: "110 cUSD/hr",
+    title: "Write a guide on IPFS for beginners",
+    price: "60 cUSD",
     verified: true,
     image: "/mobile-app-showcase.png",
-    skills: ["React Native", "iOS"],
+    skills: ["Writing", "IPFS", "Technical"],
   },
   {
     id: 5,
-    title: "Data Analysis",
-    freelancer: "Priya Patel",
-    rate: "95 cUSD/hr",
+    title: "Create an article about Mento stablecoins",
+    price: "40 cUSD",
     verified: true,
     image: "/data-analytics-visualization.png",
-    skills: ["Python", "Analytics"],
+    skills: ["Writing", "Research", "Crypto"],
   },
 ]
 
@@ -90,10 +84,12 @@ export default function GigCarousel() {
         {/* Left Arrow */}
         <button
           onClick={handlePrev}
-          className="absolute left-0 z-20 p-2 rounded-full bg-celo-green/20 hover:bg-celo-green/40 transition-all"
+          className="absolute left-0 z-20 p-2 rounded-full bg-[#36B37E]/20 hover:bg-[#36B37E]/40 transition-all"
           aria-label="Previous gig"
         >
-          <ChevronLeft className="w-6 h-6 text-celo-green" />
+          <svg className="w-6 h-6 text-[#36B37E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
         </button>
 
         {/* Gig Cards */}
@@ -112,17 +108,23 @@ export default function GigCarousel() {
                   opacity: opacity,
                 }}
               >
-                <div className="bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 w-72 h-96 flex flex-col group cursor-pointer">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 w-72 h-96 flex flex-col group cursor-pointer border border-gray-200">
                   {/* Image */}
-                  <div className="relative h-48 overflow-hidden bg-gradient-to-br from-celo-green/20 to-celo-green/5">
+                  <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[#36B37E]/20 to-[#36B37E]/5">
                     <img
                       src={gig.image || "/placeholder.svg"}
                       alt={gig.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                     {gig.verified && (
-                      <div className="absolute top-3 right-3 bg-celo-green text-white px-3 py-1 rounded-full flex items-center gap-1 text-sm font-semibold">
-                        <CheckCircle2 className="w-4 h-4" />
+                      <div className="absolute top-3 right-3 bg-[#36B37E] text-white px-3 py-1 rounded-full flex items-center gap-1 text-sm font-semibold">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
                         Verified
                       </div>
                     )}
@@ -131,26 +133,21 @@ export default function GigCarousel() {
                   {/* Content */}
                   <div className="flex-1 p-5 flex flex-col justify-between">
                     <div>
-                      <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2">{gig.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-3">{gig.freelancer}</p>
+                      <h3 className="text-lg font-bold text-black mb-2 line-clamp-2">{gig.title}</h3>
 
                       {/* Skills */}
-                      <div className="flex gap-2 mb-4">
+                      <div className="flex gap-2 mb-4 flex-wrap">
                         {gig.skills.map((skill) => (
-                          <span key={skill} className="text-xs bg-celo-green/10 text-celo-green px-2 py-1 rounded-full">
+                          <span key={skill} className="text-xs bg-[#36B37E]/10 text-[#36B37E] px-2 py-1 rounded-full">
                             {skill}
                           </span>
                         ))}
                       </div>
                     </div>
 
-                    {/* Rate */}
-                    <div className="flex items-center justify-between pt-4 border-t border-border">
-                      <div className="flex items-center gap-2 text-celo-green font-semibold">
-                        <DollarSign className="w-4 h-4" />
-                        {gig.rate}
-                      </div>
-                      <button className="px-4 py-2 bg-celo-green text-white rounded-lg text-sm font-semibold hover:bg-celo-green/90 transition-all">
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                      <div className="flex items-center gap-2 text-[#36B37E] font-bold text-lg">{gig.price}</div>
+                      <button className="px-4 py-2 bg-[#36B37E] text-white rounded-lg text-sm font-semibold hover:bg-[#2d9a6a] transition-all">
                         Hire
                       </button>
                     </div>
@@ -164,10 +161,12 @@ export default function GigCarousel() {
         {/* Right Arrow */}
         <button
           onClick={handleNext}
-          className="absolute right-0 z-20 p-2 rounded-full bg-celo-green/20 hover:bg-celo-green/40 transition-all"
+          className="absolute right-0 z-20 p-2 rounded-full bg-[#36B37E]/20 hover:bg-[#36B37E]/40 transition-all"
           aria-label="Next gig"
         >
-          <ChevronRight className="w-6 h-6 text-celo-green" />
+          <svg className="w-6 h-6 text-[#36B37E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
         </button>
       </div>
 
@@ -181,7 +180,7 @@ export default function GigCarousel() {
               setActiveIndex(idx)
             }}
             className={`w-2 h-2 rounded-full transition-all ${
-              idx === activeIndex ? "bg-celo-green w-8" : "bg-celo-green/30"
+              idx === activeIndex ? "bg-[#36B37E] w-8" : "bg-[#36B37E]/30"
             }`}
             aria-label={`Go to gig ${idx + 1}`}
           />
