@@ -1,15 +1,16 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import GigCarousel from "@/components/gig-carousel"
 import DualSection from "@/components/dual-section"
 import HowItWorks from "@/components/how-it-works"
 import Testimonials from "@/components/testimonials"
 import Footer from "@/components/footer"
-import { ConnectWalletButton } from "@/components/connect-wallet-button"
+import { ConnectWalletButton, type ConnectWalletButtonRef } from "@/components/connect-wallet-button"
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0)
+  const walletButtonRef = useRef<ConnectWalletButtonRef>(null)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -17,12 +18,16 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  const handleOpenWallet = () => {
+    walletButtonRef.current?.openModal()
+  }
+
   return (
     <main className="min-h-screen bg-white">
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="text-2xl font-bold text-black">GigJar</div>
-          <ConnectWalletButton />
+          <ConnectWalletButton ref={walletButtonRef} />
         </div>
       </header>
 
@@ -40,10 +45,32 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <button className="px-8 py-4 bg-[#36B37E] text-white rounded-lg font-semibold hover:bg-[#2d9a6a] transition-all shadow-lg hover:shadow-xl">
+              <button
+                onClick={handleOpenWallet}
+                className="relative px-8 py-4 bg-gradient-to-r from-black to-gray-800 text-white rounded-lg font-black text-lg hover:from-gray-800 hover:to-black transition-all shadow-2xl hover:shadow-[0_0_40px_rgba(0,0,0,0.6)] hover:scale-105 border-4 border-black animate-pulse-slow"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  Verify Identity
+                </span>
+                <span className="absolute inset-0 rounded-lg bg-black opacity-30 blur-xl animate-pulse"></span>
+              </button>
+              <button
+                onClick={handleOpenWallet}
+                className="px-8 py-4 bg-[#36B37E] text-white rounded-lg font-semibold hover:bg-[#2d9a6a] transition-all shadow-lg hover:shadow-xl"
+              >
                 Post a Gig
               </button>
-              <button className="px-8 py-4 bg-[#36B37E] text-white rounded-lg font-semibold hover:bg-[#2d9a6a] transition-all shadow-lg hover:shadow-xl">
+              <button
+                onClick={handleOpenWallet}
+                className="px-8 py-4 bg-[#36B37E] text-white rounded-lg font-semibold hover:bg-[#2d9a6a] transition-all shadow-lg hover:shadow-xl"
+              >
                 Browse Gigs
               </button>
             </div>
@@ -103,7 +130,8 @@ export default function Home() {
             <img
               src="/vector-illustration-of-diverse-people-working-toge.jpg"
               alt="Co-working space"
-              className="w-full h-auto rounded-2xl"
+              className="w-full h-auto rounded-2xl cursor-pointer hover:opacity-90 transition-opacity"
+              onClick={handleOpenWallet}
             />
 
             <div className="mt-8 text-center">
@@ -127,7 +155,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">Browse Verified Gigs</h2>
             <p className="text-lg text-gray-700">Explore fixed-price tasks from verified freelancers</p>
           </div>
-          <GigCarousel />
+          <GigCarousel onCardClick={handleOpenWallet} />
         </div>
       </section>
 

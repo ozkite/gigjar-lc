@@ -5,27 +5,27 @@ import { useState, useEffect } from "react"
 const gigs = [
   {
     id: 1,
-    title: "Deploy a miniapp on Farcaster",
-    price: "500 cUSD",
+    title: "Deploy Smart Contracts on Celo main net and Alfajores",
+    price: "800 cUSD",
     verified: true,
     image: "/smart-contract-code.png",
-    skills: ["Farcaster", "Web3", "React"],
+    skills: ["Solidity", "Celo", "Smart Contracts"],
   },
   {
     id: 2,
-    title: "Help a project with UI/UX design",
-    price: "800 cUSD",
+    title: "Deploy a miniapp on Farcaster on Celo L2",
+    price: "500 cUSD",
     verified: true,
     image: "/design-mockup.jpg",
-    skills: ["Figma", "UI/UX", "Design"],
+    skills: ["Farcaster", "Celo L2", "React"],
   },
   {
     id: 3,
-    title: "Deploy Smart Contracts on Base",
+    title: "Help a project with UI/UX design",
     price: "800 cUSD",
     verified: true,
     image: "/web-development-concept.png",
-    skills: ["Solidity", "Base", "Smart Contracts"],
+    skills: ["Figma", "UI/UX", "Design"],
   },
   {
     id: 4,
@@ -45,7 +45,11 @@ const gigs = [
   },
 ]
 
-export default function GigCarousel() {
+interface GigCarouselProps {
+  onCardClick?: () => void
+}
+
+export default function GigCarousel({ onCardClick }: GigCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
 
@@ -108,7 +112,10 @@ export default function GigCarousel() {
                   opacity: opacity,
                 }}
               >
-                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 w-72 h-96 flex flex-col group cursor-pointer border border-gray-200">
+                <div
+                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 w-72 h-96 flex flex-col group cursor-pointer border border-gray-200"
+                  onClick={onCardClick}
+                >
                   {/* Image */}
                   <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[#36B37E]/20 to-[#36B37E]/5">
                     <img
@@ -147,7 +154,13 @@ export default function GigCarousel() {
 
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                       <div className="flex items-center gap-2 text-[#36B37E] font-bold text-lg">{gig.price}</div>
-                      <button className="px-4 py-2 bg-[#36B37E] text-white rounded-lg text-sm font-semibold hover:bg-[#2d9a6a] transition-all">
+                      <button
+                        className="px-4 py-2 bg-[#36B37E] text-white rounded-lg text-sm font-semibold hover:bg-[#2d9a6a] transition-all"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onCardClick?.()
+                        }}
+                      >
                         Hire
                       </button>
                     </div>
