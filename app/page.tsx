@@ -7,6 +7,7 @@ import HowItWorks from "@/components/how-it-works"
 import Testimonials from "@/components/testimonials"
 import Footer from "@/components/footer"
 import { ConnectWalletButton, type ConnectWalletButtonRef } from "@/components/connect-wallet-button"
+import SelfVerifyButton from "@/components/identity/SelfVerifyButton"
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0)
@@ -45,22 +46,7 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <button
-                onClick={handleOpenWallet}
-                className="relative px-8 py-4 bg-gradient-to-r from-black to-gray-800 text-white rounded-lg font-black text-lg hover:from-gray-800 hover:to-black transition-all shadow-2xl hover:shadow-[0_0_40px_rgba(0,0,0,0.6)] hover:scale-105 border-4 border-black animate-pulse-slow"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  Verify Identity
-                </span>
-                <span className="absolute inset-0 rounded-lg bg-black opacity-30 blur-xl animate-pulse"></span>
-              </button>
+              <SelfVerifyButton />
               <button
                 onClick={handleOpenWallet}
                 className="px-8 py-4 bg-[#36B37E] text-white rounded-lg font-semibold hover:bg-[#2d9a6a] transition-all shadow-lg hover:shadow-xl"
@@ -96,7 +82,7 @@ export default function Home() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
                 </div>
