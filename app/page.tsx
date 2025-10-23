@@ -134,6 +134,52 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Identity Verification Section */}
+      <section className="py-20 px-4 bg-white border-t border-gray-200">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">🛡️ Verify Your Identity Privately</h2>
+
+          <p className="text-lg md:text-xl text-gray-700 mb-12 leading-relaxed max-w-3xl mx-auto">
+            Prove you're a real human using zero-knowledge, privacy-preserving verification. No personal data is ever
+            stored or shared.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 max-w-2xl mx-auto">
+            <div className="flex items-start gap-3 p-6 rounded-xl bg-gray-50 border border-gray-200 text-left">
+              <div className="text-[#36B37E] text-2xl flex-shrink-0">✅</div>
+              <div>
+                <h3 className="font-semibold text-black mb-1">Zero-knowledge proof of humanity</h3>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3 p-6 rounded-xl bg-gray-50 border border-gray-200 text-left">
+              <div className="text-[#36B37E] text-2xl flex-shrink-0">✅</div>
+              <div>
+                <h3 className="font-semibold text-black mb-1">Sybil-resistant freelance marketplace</h3>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3 p-6 rounded-xl bg-gray-50 border border-gray-200 text-left">
+              <div className="text-[#36B37E] text-2xl flex-shrink-0">✅</div>
+              <div>
+                <h3 className="font-semibold text-black mb-1">Compliant with global privacy standards</h3>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3 p-6 rounded-xl bg-gray-50 border border-gray-200 text-left">
+              <div className="text-[#36B37E] text-2xl flex-shrink-0">✅</div>
+              <div>
+                <h3 className="font-semibold text-black mb-1">One verification, lifetime access</h3>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-center">
+            <SelfVerifyButton />
+          </div>
+        </div>
+      </section>
+
       {/* Gig Carousel Section */}
       <section className="py-20 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto">
