@@ -6,16 +6,22 @@ import type { SelfApp } from "@selfxyz/qrcode"
 import { ethers } from "ethers"
 
 export default function SelfVerifyButton() {
+  const [mounted, setMounted] = useState(false)
   const [selfApp, setSelfApp] = useState<SelfApp | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [showQR, setShowQR] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
     if (showQR) {
       try {
-        const endpoint = process.env.NEXT_PUBLIC_VERCEL_URL
-          ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/verify`
-          : "https://gigjar.xyz/api/verify"
+        const endpoint =
+          typeof window !== "undefined" && window.location.hostname === "localhost"
+            ? "http://localhost:3000/api/verify"
+            : "https://gigjar.xyz/api/verify"
 
         const app = new SelfAppBuilder({
           version: 2,
@@ -47,6 +53,19 @@ export default function SelfVerifyButton() {
   const handleError = (err: any) => {
     console.error("❌ Verification failed:", err)
     alert("❌ Verification failed. Please try again.")
+  }
+
+  if (!mounted) {
+    return (
+      <button className="relative px-8 py-4 bg-gradient-to-r from-black to-gray-800 text-white rounded-lg font-black text-lg shadow-2xl border-4 border-black">
+        <span className="relative z-10 flex items-center justify-center gap-2">
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Verify Identity
+        </span>
+      </button>
+    )
   }
 
   if (error) {
