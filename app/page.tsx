@@ -38,7 +38,7 @@ export default function Home() {
           {/* Left: Content */}
           <div className="text-left">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-black mb-6 leading-tight text-balance">
-              The Instant Task Marketplace That Runs on <span className="text-[#36B37E]">Stablecoins</span>
+              The Marketplace for Tech Gigs That Runs on <span className="text-[#36B37E]">Stablecoins</span>
             </h1>
 
             <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed max-w-xl">
@@ -185,7 +185,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">Browse Verified Gigs</h2>
-            <p className="text-lg text-gray-700">Explore fixed-price tasks from verified freelancers</p>
+            <p className="text-lg text-gray-700">Select and complete the gig and get paid instantly</p>
           </div>
           <GigCarousel onCardClick={handleOpenWallet} />
         </div>
