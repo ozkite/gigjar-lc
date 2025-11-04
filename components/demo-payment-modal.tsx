@@ -42,6 +42,13 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
       return
     }
 
+    const recipientAddress = account.address
+
+    console.log("[v0] Starting demo payment flow")
+    console.log("[v0] Selected token:", selectedToken.symbol)
+    console.log("[v0] Recipient address:", recipientAddress)
+    console.log("[v0] Amount: 0.1", selectedToken.symbol)
+
     try {
       setStep(3)
 
@@ -51,29 +58,37 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
         address: selectedToken.address,
       })
 
-      // Prepare the token transfer transaction
+      console.log("[v0] Token contract created:", tokenContract.address)
+
       const transaction = prepareContractCall({
         contract: tokenContract,
         method: "function transfer(address to, uint256 amount) returns (bool)",
-        params: [DEMO_PLATFORM_WALLET, toWei("0.1")],
+        params: [recipientAddress, toWei("0.1")],
       })
+
+      console.log("[v0] Transaction prepared, sending...")
 
       // Send the transaction
       sendTransaction(transaction, {
         onSuccess: (result) => {
           console.log("[v0] Transaction successful:", result)
+          console.log("[v0] Transaction hash:", result.transactionHash)
           setTxHash(result.transactionHash)
           setStep(4)
         },
         onError: (error) => {
           console.error("[v0] Transaction failed:", error)
-          alert("Transaction failed. Please try again.")
+          const errorMessage = error instanceof Error ? error.message : "Unknown error"
+          alert(
+            `Transaction failed: ${errorMessage}\n\nPlease ensure you have enough ${selectedToken.symbol} and gas (CELO) in your wallet.`,
+          )
           setStep(2)
         },
       })
     } catch (error) {
       console.error("[v0] Error preparing transaction:", error)
-      alert("Error preparing transaction. Please try again.")
+      const errorMessage = error instanceof Error ? error.message : "Unknown error"
+      alert(`Error preparing transaction: ${errorMessage}`)
       setStep(2)
     }
   }
@@ -164,7 +179,7 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
         {step === 2 && (
           <div className="space-y-6">
             <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-              <h3 className="font-bold text-black mb-4">Confirm Delivery</h3>
+              <h3 className="font-bold text-black mb-4">Confirm Demo Payment</h3>
               <label className="flex items-start gap-3 cursor-pointer">
                 <input
                   type="checkbox"
@@ -173,10 +188,17 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
                   className="mt-1 w-5 h-5 text-[#36B37E] rounded focus:ring-[#36B37E]"
                 />
                 <span className="text-gray-700 text-sm">
-                  I confirm that I want to send 0.1 {selectedToken.symbol} as a demo payment. This is a real transaction
-                  on the Celo network.
+                  I confirm that I want to send 0.1 {selectedToken.symbol} to my own wallet as a demo. This is a real
+                  transaction on the Celo network and will require gas fees.
                 </span>
               </label>
+
+              {account && (
+                <div className="mt-4 p-3 bg-white rounded-lg border border-gray-200">
+                  <p className="text-xs text-gray-500 mb-1">Your wallet address:</p>
+                  <p className="text-sm font-mono text-gray-700 break-all">{account.address}</p>
+                </div>
+              )}
             </div>
 
             <button

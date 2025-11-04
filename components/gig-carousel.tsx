@@ -60,7 +60,7 @@ interface GigCarouselProps {
 }
 
 export default function GigCarousel({ onCardClick, onDemoClick }: GigCarouselProps) {
-  const [activeIndex, setActiveIndex] = useState(2)
+  const [activeIndex, setActiveIndex] = useState(1)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
 
   useEffect(() => {
