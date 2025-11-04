@@ -12,17 +12,19 @@ interface DemoPaymentModalProps {
   onClose: () => void
 }
 
-// cUSD token contract on Celo
-const cUSDContract = getContract({
-  client,
-  chain: celo,
-  address: "0x765de816845861e75a25fca122bb6898b8b1282a",
-})
+const TOKENS = [
+  { symbol: "cUSD", address: "0x765de816845861e75a25fca122bb6898b8b1282a", name: "Celo Dollar" },
+  { symbol: "cEUR", address: "0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73", name: "Celo Euro" },
+  { symbol: "cCOP", address: "0x8a567e2ae79ca692bd748ab832081c45de4041ea", name: "Celo Colombian Peso" },
+  { symbol: "cZAR", address: "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6", name: "Celo South African Rand" },
+  { symbol: "cJPY", address: "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20", name: "Celo Japanese Yen" },
+]
 
 export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalProps) {
   const [step, setStep] = useState(1)
   const [confirmed, setConfirmed] = useState(false)
   const [txHash, setTxHash] = useState<string>("")
+  const [selectedToken, setSelectedToken] = useState(TOKENS[0])
   const account = useActiveAccount()
   const { mutate: sendTransaction, isPending } = useSendTransaction()
 
@@ -43,9 +45,15 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
     try {
       setStep(3)
 
-      // Prepare the cUSD transfer transaction
+      const tokenContract = getContract({
+        client,
+        chain: celo,
+        address: selectedToken.address,
+      })
+
+      // Prepare the token transfer transaction
       const transaction = prepareContractCall({
-        contract: cUSDContract,
+        contract: tokenContract,
         method: "function transfer(address to, uint256 amount) returns (bool)",
         params: [DEMO_PLATFORM_WALLET, toWei("0.1")],
       })
@@ -74,6 +82,7 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
     setStep(1)
     setConfirmed(false)
     setTxHash("")
+    setSelectedToken(TOKENS[0]) // Reset to cUSD
     onClose()
   }
 
@@ -93,7 +102,7 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
 
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-black mb-2">Demo Payment Flow</h2>
-          <p className="text-gray-600 text-sm">Experience real cUSD transactions on Celo</p>
+          <p className="text-gray-600 text-sm">Experience real stablecoin transactions on Celo</p>
         </div>
 
         {/* Progress Steps */}
@@ -118,11 +127,27 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
             <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
               <h3 className="font-bold text-black mb-2">Demo Gig: Test Payment Flow</h3>
               <p className="text-gray-600 text-sm mb-4">
-                This is a demo gig to showcase real cUSD payments on the Celo network.
+                This is a demo gig to showcase real stablecoin payments on the Celo network.
               </p>
+
+              <div className="mb-4">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Select Token:</label>
+                <select
+                  value={selectedToken.symbol}
+                  onChange={(e) => setSelectedToken(TOKENS.find((t) => t.symbol === e.target.value) || TOKENS[0])}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#36B37E] focus:border-transparent"
+                >
+                  {TOKENS.map((token) => (
+                    <option key={token.symbol} value={token.symbol}>
+                      {token.symbol} - {token.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                 <span className="text-gray-600">Amount:</span>
-                <span className="text-[#36B37E] font-bold text-xl">0.1 cUSD</span>
+                <span className="text-[#36B37E] font-bold text-xl">0.1 {selectedToken.symbol}</span>
               </div>
             </div>
 
@@ -148,8 +173,8 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
                   className="mt-1 w-5 h-5 text-[#36B37E] rounded focus:ring-[#36B37E]"
                 />
                 <span className="text-gray-700 text-sm">
-                  I confirm that I want to send 0.1 cUSD as a demo payment. This is a real transaction on the Celo
-                  network.
+                  I confirm that I want to send 0.1 {selectedToken.symbol} as a demo payment. This is a real transaction
+                  on the Celo network.
                 </span>
               </label>
             </div>
@@ -159,7 +184,7 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
               disabled={!confirmed || !account}
               className="w-full px-6 py-3 bg-[#36B37E] text-white rounded-lg font-semibold hover:bg-[#2d9a6a] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {!account ? "Connect Wallet First" : "Send Payment"}
+              {!account ? "Connect Wallet First" : `Send 0.1 ${selectedToken.symbol}`}
             </button>
           </div>
         )}
@@ -190,7 +215,9 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
 
             <div>
               <h3 className="font-bold text-black text-xl mb-2">Payment Successful!</h3>
-              <p className="text-gray-600 text-sm mb-4">Your demo payment of 0.1 cUSD has been sent</p>
+              <p className="text-gray-600 text-sm mb-4">
+                Your demo payment of 0.1 {selectedToken.symbol} has been sent
+              </p>
 
               {txHash && (
                 <a

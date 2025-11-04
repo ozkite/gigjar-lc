@@ -4,15 +4,6 @@ import { useState, useEffect } from "react"
 
 const gigs = [
   {
-    id: 0,
-    title: "🎯 Try Demo Payment Flow",
-    price: "0.1 cUSD",
-    verified: true,
-    image: "/smart-contract-code.png",
-    skills: ["Demo", "Celo", "cUSD"],
-    isDemo: true,
-  },
-  {
     id: 1,
     title: "Deploy Smart Contracts on Celo main net and Alfajores",
     price: "800 cUSD",
@@ -30,6 +21,15 @@ const gigs = [
   },
   {
     id: 3,
+    title: "🎯 Try Demo Payment Flow",
+    price: "0.1 cUSD",
+    verified: true,
+    image: "/smart-contract-code.png",
+    skills: ["Demo", "Celo", "cUSD"],
+    isDemo: true,
+  },
+  {
+    id: 4,
     title: "Help a project with UI/UX design",
     price: "800 cUSD",
     verified: true,
@@ -37,7 +37,7 @@ const gigs = [
     skills: ["Figma", "UI/UX", "Design"],
   },
   {
-    id: 4,
+    id: 5,
     title: "Write a guide on IPFS for beginners",
     price: "60 cUSD",
     verified: true,
@@ -45,7 +45,7 @@ const gigs = [
     skills: ["Writing", "IPFS", "Technical"],
   },
   {
-    id: 5,
+    id: 6,
     title: "Create an article about Mento stablecoins",
     price: "40 cUSD",
     verified: true,
@@ -60,7 +60,7 @@ interface GigCarouselProps {
 }
 
 export default function GigCarousel({ onCardClick, onDemoClick }: GigCarouselProps) {
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(2)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
 
   useEffect(() => {
