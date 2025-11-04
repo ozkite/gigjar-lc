@@ -8,10 +8,12 @@ import Testimonials from "@/components/testimonials"
 import Footer from "@/components/footer"
 import { ConnectWalletButton, type ConnectWalletButtonRef } from "@/components/connect-wallet-button"
 import SelfVerifyButton from "@/components/identity/SelfVerifyButton"
+import DemoPaymentModal from "@/components/demo-payment-modal"
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0)
   const walletButtonRef = useRef<ConnectWalletButtonRef>(null)
+  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -187,7 +189,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">Browse Verified Gigs</h2>
             <p className="text-lg text-gray-700">Select and complete the gig and get paid instantly</p>
           </div>
-          <GigCarousel onCardClick={handleOpenWallet} />
+          <GigCarousel onCardClick={handleOpenWallet} onDemoClick={() => setIsDemoModalOpen(true)} />
         </div>
       </section>
 
@@ -202,6 +204,9 @@ export default function Home() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Demo Payment Modal */}
+      <DemoPaymentModal isOpen={isDemoModalOpen} onClose={() => setIsDemoModalOpen(false)} />
     </main>
   )
 }

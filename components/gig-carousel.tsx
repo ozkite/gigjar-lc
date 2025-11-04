@@ -4,6 +4,15 @@ import { useState, useEffect } from "react"
 
 const gigs = [
   {
+    id: 0,
+    title: "🎯 Try Demo Payment Flow",
+    price: "0.1 cUSD",
+    verified: true,
+    image: "/smart-contract-code.png",
+    skills: ["Demo", "Celo", "cUSD"],
+    isDemo: true,
+  },
+  {
     id: 1,
     title: "Deploy Smart Contracts on Celo main net and Alfajores",
     price: "800 cUSD",
@@ -47,9 +56,10 @@ const gigs = [
 
 interface GigCarouselProps {
   onCardClick?: () => void
+  onDemoClick?: () => void
 }
 
-export default function GigCarousel({ onCardClick }: GigCarouselProps) {
+export default function GigCarousel({ onCardClick, onDemoClick }: GigCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
 
@@ -113,8 +123,16 @@ export default function GigCarousel({ onCardClick }: GigCarouselProps) {
                 }}
               >
                 <div
-                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 w-72 h-96 flex flex-col group cursor-pointer border border-gray-200"
-                  onClick={onCardClick}
+                  className={`bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 w-72 h-96 flex flex-col group cursor-pointer ${
+                    gig.isDemo ? "border-2 border-[#36B37E] ring-2 ring-[#36B37E]/20" : "border border-gray-200"
+                  }`}
+                  onClick={() => {
+                    if (gig.isDemo) {
+                      onDemoClick?.()
+                    } else {
+                      onCardClick?.()
+                    }
+                  }}
                 >
                   {/* Image */}
                   <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[#36B37E]/20 to-[#36B37E]/5">
@@ -133,6 +151,11 @@ export default function GigCarousel({ onCardClick }: GigCarouselProps) {
                           />
                         </svg>
                         Verified
+                      </div>
+                    )}
+                    {gig.isDemo && (
+                      <div className="absolute top-3 left-3 bg-yellow-400 text-black px-3 py-1 rounded-full flex items-center gap-1 text-sm font-bold">
+                        ⚡ LIVE DEMO
                       </div>
                     )}
                   </div>
@@ -158,10 +181,14 @@ export default function GigCarousel({ onCardClick }: GigCarouselProps) {
                         className="px-4 py-2 bg-[#36B37E] text-white rounded-lg text-sm font-semibold hover:bg-[#2d9a6a] transition-all"
                         onClick={(e) => {
                           e.stopPropagation()
-                          onCardClick?.()
+                          if (gig.isDemo) {
+                            onDemoClick?.()
+                          } else {
+                            onCardClick?.()
+                          }
                         }}
                       >
-                        Hire
+                        {gig.isDemo ? "Try Demo" : "Hire"}
                       </button>
                     </div>
                   </div>
