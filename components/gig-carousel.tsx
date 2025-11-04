@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 const gigs = [
   {
@@ -13,20 +13,20 @@ const gigs = [
   },
   {
     id: 2,
-    title: "Deploy a miniapp on Farcaster on Celo L2",
-    price: "500 cUSD",
-    verified: true,
-    image: "/design-mockup.jpg",
-    skills: ["Farcaster", "Celo L2", "React"],
-  },
-  {
-    id: 3,
-    title: "🎯 Try Demo Payment Flow",
+    title: "Try Demo Payment Flow",
     price: "0.1 cUSD",
     verified: true,
     image: "/smart-contract-code.png",
     skills: ["Demo", "Celo", "cUSD"],
     isDemo: true,
+  },
+  {
+    id: 3,
+    title: "Deploy a miniapp on Farcaster on Celo L2",
+    price: "500 cUSD",
+    verified: true,
+    image: "/design-mockup.jpg",
+    skills: ["Farcaster", "Celo L2", "React"],
   },
   {
     id: 4,
@@ -61,17 +61,6 @@ interface GigCarouselProps {
 
 export default function GigCarousel({ onCardClick, onDemoClick }: GigCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(1)
-  const [isAutoPlay, setIsAutoPlay] = useState(true)
-
-  useEffect(() => {
-    if (!isAutoPlay) return
-
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % gigs.length)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [isAutoPlay])
 
   const getVisibleGigs = () => {
     const visible = []
@@ -82,12 +71,10 @@ export default function GigCarousel({ onCardClick, onDemoClick }: GigCarouselPro
   }
 
   const handlePrev = () => {
-    setIsAutoPlay(false)
     setActiveIndex((prev) => (prev - 1 + gigs.length) % gigs.length)
   }
 
   const handleNext = () => {
-    setIsAutoPlay(false)
     setActiveIndex((prev) => (prev + 1) % gigs.length)
   }
 
@@ -155,7 +142,7 @@ export default function GigCarousel({ onCardClick, onDemoClick }: GigCarouselPro
                     )}
                     {gig.isDemo && (
                       <div className="absolute top-3 left-3 bg-yellow-400 text-black px-3 py-1 rounded-full flex items-center gap-1 text-sm font-bold">
-                        ⚡ LIVE DEMO
+                        LIVE DEMO
                       </div>
                     )}
                   </div>
@@ -215,10 +202,7 @@ export default function GigCarousel({ onCardClick, onDemoClick }: GigCarouselPro
         {gigs.map((_, idx) => (
           <button
             key={idx}
-            onClick={() => {
-              setIsAutoPlay(false)
-              setActiveIndex(idx)
-            }}
+            onClick={() => setActiveIndex(idx)}
             className={`w-2 h-2 rounded-full transition-all ${
               idx === activeIndex ? "bg-[#36B37E] w-8" : "bg-[#36B37E]/30"
             }`}

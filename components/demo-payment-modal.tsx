@@ -28,8 +28,7 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
   const account = useActiveAccount()
   const { mutate: sendTransaction, isPending } = useSendTransaction()
 
-  // Demo platform wallet (replace with your actual wallet address)
-  const DEMO_PLATFORM_WALLET = "0x0000000000000000000000000000000000000000"
+  const DEMO_PLATFORM_WALLET = "0x8922C8Ac42AE84cED3A4e8D54Ce7FCb3d52EbcB2"
 
   const handleConfirmDelivery = () => {
     setConfirmed(true)
@@ -42,7 +41,7 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
       return
     }
 
-    const recipientAddress = account.address
+    const recipientAddress = DEMO_PLATFORM_WALLET
 
     console.log("[v0] Starting demo payment flow")
     console.log("[v0] Selected token:", selectedToken.symbol)
@@ -188,17 +187,15 @@ export default function DemoPaymentModal({ isOpen, onClose }: DemoPaymentModalPr
                   className="mt-1 w-5 h-5 text-[#36B37E] rounded focus:ring-[#36B37E]"
                 />
                 <span className="text-gray-700 text-sm">
-                  I confirm that I want to send 0.1 {selectedToken.symbol} to my own wallet as a demo. This is a real
+                  I confirm that I want to send 0.1 {selectedToken.symbol} to the GigJar demo wallet. This is a real
                   transaction on the Celo network and will require gas fees.
                 </span>
               </label>
 
-              {account && (
-                <div className="mt-4 p-3 bg-white rounded-lg border border-gray-200">
-                  <p className="text-xs text-gray-500 mb-1">Your wallet address:</p>
-                  <p className="text-sm font-mono text-gray-700 break-all">{account.address}</p>
-                </div>
-              )}
+              <div className="mt-4 p-3 bg-white rounded-lg border border-gray-200">
+                <p className="text-xs text-gray-500 mb-1">Recipient wallet address:</p>
+                <p className="text-sm font-mono text-gray-700 break-all">{DEMO_PLATFORM_WALLET}</p>
+              </div>
             </div>
 
             <button
